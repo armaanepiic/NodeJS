@@ -1,0 +1,65 @@
+Video title/topic (if you have it)
+Key concepts you learned
+Code examples or snippets you tried
+Important notes or things to remember
+Any questions or confusions you had
+
+# Topic-01: Global Object and Module System
+# Key concepts:
+    -> if we log window like
+        console.log(window);
+        output: window is not defined. So window in unavailable in NodeJS.
+    -> we can use setTimeouT() function in NodeJS.
+    -> In NodeJS there is an object named global. which is equivlent to window in JS.
+    -> if we console.log(global)
+        output: Object [global] {
+            global: [Circular *1],
+            clearImmediate: [Function: clearImmediate],
+            setImmediate: [Function: setImmediate] {
+                [Symbol(nodejs.util.promisify.custom)]: [Getter]
+            },
+            clearInterval: [Function: clearInterval],
+            clearTimeout: [Function: clearTimeout],
+            setInterval: [Function: setInterval],
+            setTimeout: [Function: setTimeout] {
+                [Symbol(nodejs.util.promisify.custom)]: [Getter]
+            },
+            queueMicrotask: [Function: queueMicrotask],
+            structuredClone: [Function: structuredClone],
+            atob: [Function: atob],
+            btoa: [Function: btoa],
+            performance: [Getter/Setter],
+            fetch: [Function: fetch],
+            navigator: [Getter],
+            crypto: [Getter]
+            }
+    -> setTimeouT is inside the global that's why it is accessible.
+    -> in js if we declare a variable suppose var a = 5; then console.log(window.a) gives a value. but in nodejs console.log(global.a) in undefined.
+    -> console.log(__dirname); outputs the directory name/location. (/home/armaan/projects/NodeJS); This doesn't included in the global.
+    -> console.log(__filename); outputs the file name/location. (/home/armaan/projects/NodeJS/index.js); This doesn't included in the global.
+    -> if we console.log(module) 
+    output: {
+            id: '.',
+            path: '/home/armaan/projects/NodeJS',
+            exports: {},
+            filename: '/home/armaan/projects/NodeJS/people.js',
+            loaded: false,
+            children: [],
+            paths: [
+                '/home/armaan/projects/NodeJS/node_modules',
+                '/home/armaan/projects/node_modules',
+                '/home/armaan/node_modules',
+                '/home/node_modules',
+                '/node_modules'
+            ],
+            [Symbol(kIsMainSymbol)]: true,
+            [Symbol(kIsCachedByESMLoader)]: false,
+            [Symbol(kURL)]: undefined,
+            [Symbol(kFormat)]: undefined,
+            [Symbol(kIsExecuting)]: true
+            }
+    # module: from where module comes?
+        -> efy method: whatever code i write, it wrapped by a function called efy. and lastly return that function. its called module wrapper function. that function parameters are exports, require, module, __filename, __dirname.
+        
+# Important notes
+# Code examples:
