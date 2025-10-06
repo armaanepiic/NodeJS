@@ -94,11 +94,11 @@ node example.js
 
 *Legend: ✅ Completed | 🔄 In Progress | ⬜ Not Started*
 
-**Current Focus:** File System Operations
+**Current Focus:** Server & Core Modules  
 
 ## 🔗 Resources
 
-- **Video Tutorial Playlist**: [Link to playlist]
+- **Video Tutorial Playlist**: [[Link to playlist](https://www.youtube.com/playlist?list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM)]
 - **Official Documentation**: [Node.js Docs](https://nodejs.org/docs)
 - **Additional Learning**: [Link to any supplementary resources]
 
@@ -115,5 +115,5 @@ This project is for educational purposes. Feel free to use these notes as a refe
 ---
 
 **Last Updated**: October 7, 2025  
-**Current Focus**: File System Operations  
-**Topics Completed**: 1/8
+**Current Focus**: Server & Core Modules  
+**Topics Completed**: 1
