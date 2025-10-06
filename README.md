@@ -104,8 +104,8 @@ node example.js
 
 ## 🤝 Connect With Me
 
-- **LinkedIn**: [[Your Profile](https://www.linkedin.com/in/armaanepiic/)]
-- **Portfolio**: [[Your Website](https://armaanepiic.github.io/Portfolio/)]
+- **LinkedIn**: [[armaanepiic](https://www.linkedin.com/in/armaanepiic/)]
+- **Portfolio**: [[armaanepiic](https://armaanepiic.github.io/Portfolio/)]
 - **Email**: armaanepiic@gmail.com
 
 ## 📄 License
