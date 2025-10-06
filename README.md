@@ -100,13 +100,13 @@ node example.js
 
 - **Video Tutorial Playlist**: [[Link to playlist](https://www.youtube.com/playlist?list=PLHiZ4m8vCp9PHnOIT7gd30PCBoYCpGoQM)]
 - **Official Documentation**: [Node.js Docs](https://nodejs.org/docs)
-- **Additional Learning**: [Link to any supplementary resources]
+- **Additional Learning**: [[Link to any supplementary resources](https://www.w3schools.com/nodejs/default.asp)]
 
 ## 🤝 Connect With Me
 
-- **LinkedIn**: [Your Profile]
-- **Portfolio**: [Your Website]
-- **Email**: your.email@example.com
+- **LinkedIn**: [[Your Profile](https://www.linkedin.com/in/armaanepiic/)]
+- **Portfolio**: [[Your Website](https://armaanepiic.github.io/Portfolio/)]
+- **Email**: armaanepiic@gmail.com
 
 ## 📄 License
 
