@@ -17,14 +17,14 @@ This repository contains my notes, code examples, and projects as I learn Node.j
 ## 📖 Table of Contents
 
 ### Core Concepts
-- [01 - Introduction to Node.js](./01-introduction/)
-- [02 - Node.js Installation & Setup](./02-installation-setup/)
-- [03 - Understanding Modules](./03-modules/)
+- [01 - Global Object and Module System](./01-global-module-system/) ✅ *Completed: Oct 7, 2025*
+- [02 - File System Operations](./02-file-system/)
+- [03 - Events & Event Emitter](./03-events/)
 
 ### Fundamentals
-- [04 - File System Operations](./04-file-system/)
-- [05 - Events & Event Emitter](./05-events/)
-- [06 - Streams & Buffers](./06-streams-buffers/)
+- [04 - HTTP Module](./04-http-module/)
+- [05 - Streams & Buffers](./05-streams-buffers/)
+- [06 - Events & Event Emitter](./06-events/)
 
 ### Asynchronous Programming
 - [07 - Callbacks](./07-callbacks/)
@@ -81,15 +81,20 @@ node example.js
 
 ## 📝 Progress Tracker
 
-| Section | Status | Date Completed |
-|---------|--------|----------------|
-| Introduction | ⬜ Not Started | - |
-| Installation & Setup | ⬜ Not Started | - |
-| Modules | ⬜ Not Started | - |
-| File System | ⬜ Not Started | - |
-| Events | ⬜ Not Started | - |
+| # | Topic | Status | Date |
+|---|-------|--------|------|
+| 01 | Global Object and Module System | ✅ Completed | Oct 7, 2025 |
+| 02 | File System Operations | ⬜ Not Started | - |
+| 03 | Events & Event Emitter | ⬜ Not Started | - |
+| 04 | HTTP Module | ⬜ Not Started | - |
+| 05 | Streams & Buffers | ⬜ Not Started | - |
+| 06 | Asynchronous Programming | ⬜ Not Started | - |
+| 07 | NPM & Package Management | ⬜ Not Started | - |
+| 08 | Express.js Basics | ⬜ Not Started | - |
 
 *Legend: ✅ Completed | 🔄 In Progress | ⬜ Not Started*
+
+**Current Focus:** File System Operations
 
 ## 🔗 Resources
 
@@ -109,5 +114,6 @@ This project is for educational purposes. Feel free to use these notes as a refe
 
 ---
 
-**Last Updated**: October 2025  
-**Current Focus**: [Topic you're currently learning]
+**Last Updated**: October 7, 2025  
+**Current Focus**: File System Operations  
+**Topics Completed**: 1/8
