@@ -59,7 +59,93 @@ Any questions or confusions you had
             [Symbol(kIsExecuting)]: true
             }
     # module: from where module comes?
-        -> efy method: whatever code i write, it wrapped by a function called efy. and lastly return that function. its called module wrapper function. that function parameters are exports, require, module, __filename, __dirname.
+        -> IIFE method: whatever code i write, it wrapped by a function called IIFE and lastly return that function. its called module wrapper function. that function parameters are exports, require, module, __filename, __dirname.
         
-# Important notes
-# Code examples:
+
+# Topic-02: Core modules and server
+# Key concepts:
+    1. path module: 
+        code:   const path = require('path');
+                const myPath = '/home/armaan/projects/NodeJS/index.js';
+                -> console.log(path.basename(myPath)); output: index.js
+                -> console.log(path.dirname(myPath)); output: /home/armaan/projects/NodeJS
+                -> console.log(path.extname(myPath)); output: .js
+                -> console.log(path.parse(myPath)); 
+                    output: {
+                                root: '/',
+                                dir: '/home/armaan/projects/NodeJS',
+                                base: 'index.js',
+                                ext: '.js',
+                                name: 'index'
+                            }
+                ->  // path.format(pathObject)
+                    // path.matchesGlob(path, pattern)
+                    // path.isAbsolute(path)
+                    // path.join([...paths])
+                    // path.normalize(path)
+                    // path.parse(path)
+                    // path.posix
+                    // path.relative(from, to)
+                    // path.resolve([...paths])
+                    // path.sep
+                    // path.toNamespacedPath(path)
+                    // path.win32
+    2. OS module:
+        const os = require('os');
+        console.log(os.platform());
+        console.log(os.homedir());
+        console.log(os.freemem());
+        console.log(os.cpus());
+    3. file module:
+    4: events module:
+        -> events-module.js
+            const EventEmitter = require("events");
+            const emitter = new EventEmitter();
+
+            const startPeriod = require("./school");
+            // register a listener for bellRing event
+            emitter.on("bellRing", ({ period, text }) => {
+            console.log(`We need to run because ${period} ${text}`);
+            });
+            startPeriod();
+        -> school.js
+            const EventEmitter = require("events");
+            const emitter = new EventEmitter();
+
+            function startPeriod() {
+            console.log("Class started");
+            // raise an event when bell rings
+            setTimeout(() => {
+                emitter.emit("bellRing", { period: "first", text: "Period ended" });
+            }, 2000);
+            }
+            module.exports = startPeriod;
+        output: only "Class started" because emitter is a new different class in individual js file.
+        if we code like:
+        -> events-module.js
+            const EventEmitter = require("events");
+            const emitter = new EventEmitter();
+
+            const School = require("./school");
+            // register a listener for bellRing event
+            const school = new School();
+            school.on("bellRing", ({ period, text }) => {
+            console.log(`We need to run because ${period} ${text}`);
+            });
+            school.startPeriod();
+        -> school.js
+            const EventEmitter = require("events");
+            class School extends EventEmitter {
+            startPeriod() {
+                console.log("Class started");
+                // raise an event when bell rings
+                setTimeout(() => {
+                this.emit("bellRing", { period: "first", text: "Period ended" });
+                }, 2000);
+            }
+            }
+
+            module.exports = School;
+            output: Class started
+                    We need to run because first Period ended       
+    5.
