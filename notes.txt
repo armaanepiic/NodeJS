@@ -149,3 +149,16 @@ Any questions or confusions you had
             output: Class started
                     We need to run because first Period ended       
     5. HTTP module:
+
+
+
+Stage 1 – JavaScript Basics
+Stage 2 – Node.js Core (FS, Path, Events)
+Stage 3 – NPM & Packages
+Stage 4 – Express.js
+Stage 5 – RESTful APIs
+Stage 6 – Authentication (JWT, OAuth)
+Stage 7 – Databases (MongoDB, PostgreSQL)
+Stage 8 – WebSockets (Socket.IO)
+Stage 9 – Testing (Mocha, Jest)
+Stage 10 – Deployment (Docker, AWS)

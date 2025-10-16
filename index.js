@@ -1,19 +1,23 @@
+// let http = require('http');
+
+// http.createServer(function (req, res) {
+//     res.writeHead(200, {'Content-Type': 'text/plain'});
+//     res.end('Hello World!');
+// }).listen(5000);
 
 
+// const os = require('os');
+// console.log(os.platform());
 
-const fs = require('fs');
-// to write a file
-fs.writeFileSync('myfile.txt', 'hello programmers'); // synchronous way
-// replace that file
-fs.writeFileSync('myfile.txt', 'how are you'); // synchronous way
-// append that file
-fs.appendFileSync('myfile.txt', ' programmers'); // synchronous way
-// read file
-const data = fs.readFileSync('myfile.txt');
-// console.log(data); // output: <Buffer 68 6f 77 20 61 72 65 20 79 6f 75 20 70 72 6f 67 72 61 6d 6d 65 72 73>
-// console.log(data.toString()); // original data
+// const express = require('express');
+// const app = express();
+// app.get('/', (req, res) => res.send('Hello World!'));
+// app.listen(8080);
 
-fs.readFile('myfile.txt', (err, data)=> {
-    console.log(data.toString());
-});
-console.log('I am first');
+global.mylet = 20;
+console.log('First argument:', process.argv[2]);
+console.log('Second argument:', process.argv[3]);
+
+// console.log('All arguments:', process.argv);
+// console.log('First argument:', process.argv[2]);
+// console.log('Second argument:', process.argv[3]);
