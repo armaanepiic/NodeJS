@@ -1,12 +1,16 @@
 const EventEmitter = require("events");
+// console.log(EventEmitter);
+
 class School extends EventEmitter {
   startPeriod() {
     console.log("Class started");
-    // raise an event when bell rings
+
     setTimeout(() => {
-      this.emit("bellRing", { period: "first", text: "Period ended" });
+      this.emit("bellRing", {
+        period: "first",
+        text: "period ended",
+      });
     }, 2000);
   }
 }
-
 module.exports = School;
