@@ -287,30 +287,3 @@ res.end();
 // 4. Listen on port
 server.listen(port);
 ```
-
----
-
-## 🧪 Practice Exercises
-
-Try these to solidify your learning:
-
-1. Create a server with 5 different routes
-2. Build an EventEmitter class that simulates a traffic light (red → yellow → green)
-3. Use the `path` module to build absolute paths for different files
-4. Use `os` module to log system information when server starts
-
----
-
-## 📚 Next Steps
-
-- Learn File System (fs) module operations
-- Understand synchronous vs asynchronous methods
-- Explore streams for handling large files
-- Build a file-based routing system
-
----
-
-## 🔗 Related Topics
-- **Previous:** Topic 01 - Global Object and Module System
-- **Next:** Topic 03 - File System Operations (Deep Dive)
-- **See Also:** Express.js (higher-level HTTP framework)
