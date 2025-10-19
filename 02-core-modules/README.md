@@ -233,42 +233,126 @@ Open browser and visit:
 
 ---
 
-## 📝 5. File System Module & Streams
+## 📝 5. File System Module
 
-The `fs` (File System) module allows you to work with files on your computer.
+The `fs` (File System) module allows you to work with files on your computer. Basic file operations will be covered in detail in upcoming topics.
 
-### Reading and Writing with Streams
+---
 
-**Why Streams?** When dealing with large files, reading the entire file into memory can be inefficient. Streams allow you to process data in chunks!
+## 🌊 6. Streams and Buffers (Deep Dive)
 
-### Basic Stream Operations
+### What Are Streams?
+
+**Streams** are collections of data that might not be available all at once. Instead of loading entire files into memory, streams allow you to process data piece by piece (in chunks).
+
+### Real-World Analogy
+Think of watching a video on YouTube:
+- ❌ **Without Streams**: Download the entire 2GB video, then watch it
+- ✅ **With Streams**: Start watching while it downloads in chunks
+
+### Why Use Streams?
+
+**Benefits:**
+- **Memory Efficient** - Process large files without loading everything into RAM
+- **Time Efficient** - Start processing data before it's fully loaded
+- **Composable** - Chain multiple operations together using `pipe()`
+
+---
+
+### Types of Streams
+
+1. **Readable** - Read data from a source (e.g., reading files)
+2. **Writable** - Write data to a destination (e.g., writing files)
+3. **Duplex** - Both readable and writable (e.g., TCP sockets)
+4. **Transform** - Modify data as it's read/written (e.g., compression)
+
+---
+
+### Reading Streams
 
 ```javascript
 const fs = require('fs');
 
-// Create read and write streams
+const ourReadStream = fs.createReadStream(`${__dirname}/myfile.txt`);
+
+// Listen for data chunks
+ourReadStream.on('data', (chunk) => {
+    console.log('Received chunk:');
+    console.log(chunk); // Buffer object by default
+});
+
+// Specify encoding to get strings instead of Buffers
+const readStream = fs.createReadStream(`${__dirname}/myfile.txt`, 'utf8');
+
+readStream.on('data', (chunk) => {
+    console.log(chunk); // Now it's a string!
+});
+```
+
+---
+
+### Writing Streams
+
+```javascript
+const fs = require('fs');
+
+const writeStream = fs.createWriteStream(`${__dirname}/output.txt`);
+
+// Write data
+writeStream.write('Hello World!\n');
+writeStream.write('This is line 2\n');
+
+// Close the stream
+writeStream.end();
+
+// Listen for finish event
+writeStream.on('finish', () => {
+    console.log('Writing completed!');
+});
+```
+
+---
+
+### Piping Streams
+
+**`pipe()`** is the most elegant way to connect streams. It automatically handles data flow, backpressure, and errors.
+
+```javascript
+const fs = require('fs');
+
 const ourReadStream = fs.createReadStream(`${__dirname}/myfile.txt`);
 const ourWriteStream = fs.createWriteStream(`${__dirname}/output.txt`);
 
-// Method 1: Manual streaming
+// Method 1: Manual (More code, more control)
 ourReadStream.on('data', (chunk) => {
     ourWriteStream.write(chunk);
 });
 
-// Method 2: Using pipe (Better way!)
+// Method 2: Using pipe (Recommended!)
 ourReadStream.pipe(ourWriteStream);
 ```
 
-### Stream with HTTP Server
+**Why `pipe()` is better:**
+- Handles backpressure automatically
+- Cleaner, more readable code
+- Less chance of memory leaks
+- Automatically handles errors
 
-You can stream files directly to HTTP responses for better performance:
+---
+
+### Streaming Files to HTTP Response
+
+Instead of reading an entire file into memory and then sending it, stream it directly to the response:
 
 ```javascript
 const http = require('http');
 const fs = require('fs');
 
 const server = http.createServer((req, res) => {
+    // Create read stream
     const myReadStream = fs.createReadStream(`${__dirname}/myfile.txt`, 'utf8');
+    
+    // Pipe directly to response
     myReadStream.pipe(res);
 });
 
@@ -276,10 +360,18 @@ server.listen(3000);
 console.log('listening on port 3000');
 ```
 
+**What happens:**
+1. Client requests the file
+2. Server starts reading file in chunks
+3. Each chunk is immediately sent to client
+4. Client starts receiving data instantly
+
 **Benefits:**
-- Memory efficient - doesn't load entire file into memory
-- Faster response time - starts sending data immediately
-- Can handle large files without crashing
+- Works with files of ANY size
+- Low memory usage (only one chunk in memory at a time)
+- Better user experience (faster initial response)
+
+---
 
 ### Handling POST Requests with Streams
 
@@ -307,20 +399,81 @@ const server = http.createServer((req, res) => {
 });
 ```
 
-### Key Stream Concepts
+---
 
-**`pipe()`** - The elegant way to connect streams
+### Understanding Buffers
+
+#### What is a Buffer?
+
+A **Buffer** is a temporary storage area for binary data. It's Node.js's way of handling raw binary data directly.
+
+#### Why Buffers?
+
+JavaScript was originally designed for browsers and didn't have a way to handle binary data. Node.js added Buffers to work with:
+- File systems
+- TCP streams
+- Image/video processing
+- Cryptography
+
+#### Working with Buffers
+
 ```javascript
-readStream.pipe(writeStream);
-// Automatically handles backpressure and flow control
+// Create a buffer from a string
+const buffer1 = Buffer.from('Hello World');
+console.log(buffer1); // <Buffer 48 65 6c 6c 6f 20 57 6f 72 6c 64>
+
+// Convert buffer to string
+console.log(buffer1.toString()); // "Hello World"
+
+// Create an empty buffer of specific size
+const buffer2 = Buffer.alloc(10); // 10 bytes
+
+// Write to buffer
+buffer2.write('Hi');
+console.log(buffer2.toString()); // "Hi"
 ```
 
-**Stream Events:**
-- `'data'` - Fired when a chunk is available
-- `'end'` - Fired when no more data
-- `'error'` - Fired when an error occurs
+#### Buffers with Streams
 
-**Buffer** - Temporary storage for binary data. Use `Buffer.concat()` to combine chunks and `.toString()` to convert to string.
+When you read a stream without encoding, you get Buffer objects:
+
+```javascript
+const readStream = fs.createReadStream(`${__dirname}/myfile.txt`);
+
+readStream.on('data', (chunk) => {
+    console.log(chunk); // <Buffer 41 20 77 65 65 6b ...>
+    console.log(chunk.toString()); // Convert to readable text
+});
+```
+
+---
+
+### Stream Events Reference
+
+**Readable Stream Events:**
+- `'data'` - Chunk is available to process
+- `'end'` - No more data to read
+- `'error'` - An error occurred
+- `'close'` - Stream is closed
+
+**Writable Stream Events:**
+- `'finish'` - All data has been written
+- `'error'` - An error occurred
+- `'close'` - Stream is closed
+- `'drain'` - Ready to accept more data
+
+---
+
+### Key Stream & Buffer Concepts
+
+✅ **Streams process data in chunks** - Don't load everything into memory  
+✅ **Four types of streams** - Readable, Writable, Duplex, Transform  
+✅ **`pipe()` is your friend** - Handles complexity automatically  
+✅ **Buffers store binary data** - Temporary storage for raw data  
+✅ **Encoding matters** - Specify 'utf8' for text files  
+✅ **Event-driven** - Listen to 'data', 'end', 'error' events  
+✅ **HTTP responses are streams** - Can pipe directly to them  
+✅ **Memory efficient** - Handle files larger than available RAM
 
 ---
 
@@ -368,4 +521,33 @@ res.end();
 server.listen(port);
 ```
 
+---
 
+## 🧪 Practice Exercises
+
+Try these to solidify your learning:
+
+1. Create a server with 5 different routes
+2. Build an EventEmitter class that simulates a traffic light (red → yellow → green)
+3. Use the `path` module to build absolute paths for different files
+4. Use `os` module to log system information when server starts
+5. Create a file upload handler using streams
+6. Build a simple file server that streams different files based on routes
+7. Implement a form that accepts POST data and saves it to a file using streams
+
+---
+
+## 📚 Next Steps
+
+- Deep dive into File System (fs) module - sync vs async methods
+- Explore different types of streams (Readable, Writable, Duplex, Transform)
+- Learn about Buffers and binary data handling
+- Build a file-based routing system
+- Understand error handling in streams
+
+---
+
+## 🔗 Related Topics
+- **Previous:** Topic 01 - Global Object and Module System
+- **Next:** Topic 03 - File System Operations (Deep Dive)
+- **See Also:** Express.js (higher-level HTTP framework)
