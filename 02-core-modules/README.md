@@ -233,17 +233,94 @@ Open browser and visit:
 
 ---
 
-## 📝 5. File System Module
+## 📝 5. File System Module & Streams
 
-*(To be covered - file-module.js is empty)*
+The `fs` (File System) module allows you to work with files on your computer.
 
-The `fs` module will allow you to:
-- Read files
-- Write files
-- Delete files
-- Create directories
-- Watch file changes
-- And more!
+### Reading and Writing with Streams
+
+**Why Streams?** When dealing with large files, reading the entire file into memory can be inefficient. Streams allow you to process data in chunks!
+
+### Basic Stream Operations
+
+```javascript
+const fs = require('fs');
+
+// Create read and write streams
+const ourReadStream = fs.createReadStream(`${__dirname}/myfile.txt`);
+const ourWriteStream = fs.createWriteStream(`${__dirname}/output.txt`);
+
+// Method 1: Manual streaming
+ourReadStream.on('data', (chunk) => {
+    ourWriteStream.write(chunk);
+});
+
+// Method 2: Using pipe (Better way!)
+ourReadStream.pipe(ourWriteStream);
+```
+
+### Stream with HTTP Server
+
+You can stream files directly to HTTP responses for better performance:
+
+```javascript
+const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer((req, res) => {
+    const myReadStream = fs.createReadStream(`${__dirname}/myfile.txt`, 'utf8');
+    myReadStream.pipe(res);
+});
+
+server.listen(3000);
+console.log('listening on port 3000');
+```
+
+**Benefits:**
+- Memory efficient - doesn't load entire file into memory
+- Faster response time - starts sending data immediately
+- Can handle large files without crashing
+
+### Handling POST Requests with Streams
+
+The request object itself is a stream! You can read incoming data in chunks:
+
+```javascript
+const server = http.createServer((req, res) => {
+    if (req.url === '/process' && req.method === 'POST') {
+        const body = [];
+        
+        // Listen for data chunks
+        req.on('data', (chunk) => {
+            body.push(chunk);
+        });
+        
+        // When stream ends, process the data
+        req.on('end', () => {
+            console.log("Stream finished!");
+            const parsedBody = Buffer.concat(body).toString();
+            console.log(parsedBody);
+            res.write("Thank you for submission!");
+            res.end();
+        });
+    }
+});
+```
+
+### Key Stream Concepts
+
+**`pipe()`** - The elegant way to connect streams
+```javascript
+readStream.pipe(writeStream);
+// Automatically handles backpressure and flow control
+```
+
+**Stream Events:**
+- `'data'` - Fired when a chunk is available
+- `'end'` - Fired when no more data
+- `'error'` - Fired when an error occurs
+
+**Buffer** - Temporary storage for binary data. Use `Buffer.concat()` to combine chunks and `.toString()` to convert to string.
 
 ---
 
@@ -254,6 +331,9 @@ The `fs` module will allow you to:
 ✅ **OS module** provides system information  
 ✅ **EventEmitter** must be the same instance for events to work - extend the class!  
 ✅ **HTTP module** lets you create web servers without Express  
+✅ **Streams** process data in chunks - memory efficient for large files  
+✅ **pipe()** is the elegant way to connect streams together  
+✅ **Request object is a stream** - use events to read incoming data  
 ✅ Always call `res.end()` when using HTTP module  
 
 ---
@@ -287,3 +367,5 @@ res.end();
 // 4. Listen on port
 server.listen(port);
 ```
+
+
