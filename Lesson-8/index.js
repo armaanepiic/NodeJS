@@ -4,7 +4,7 @@ const PORT = 3000;
 const hostname = "127.0.0.1";
 const server = http.createServer((req, res) => {
   function handleReadFile(statusCode, fileLocation) {
-    fs.readFile(fileLocation, (err, data) => {
+    fs.readFile(fileLocation,utf-8, (err, data) => {
       res.writeHead(statusCode, { "content-type": "text/html" });
       res.write(data);
       res.end();
